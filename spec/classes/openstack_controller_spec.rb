@@ -120,6 +120,7 @@ describe 'openstack::controller' do
         should contain_class('nova::volume')
         should_not contain_class('quantum::db::mysql')
         should_not contain_class('cinder::db::mysql')
+        should_not contain_class('cinder::api')
       end
 
     end
@@ -393,7 +394,8 @@ describe 'openstack::controller' do
         :cache_server_port => '11211',
         :swift             => false,
         :quantum           => false,
-        :horizon_app_links => false
+        :horizon_app_links => false,
+        :listen_ssl        => false
       )
     end
 
@@ -414,7 +416,7 @@ describe 'openstack::controller' do
       it 'should not contain cinder classes' do
         should_not contain_class('cinder::base')
         should_not contain_class('cinder::api')
-        should_not contain_class('cinder:"scheduler')
+        should_not contain_class('cinder::scheduler')
       end
     end
 
