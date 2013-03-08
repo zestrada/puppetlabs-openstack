@@ -1,6 +1,7 @@
 class openstack::cinder(
   $sql_connection,
   $rabbit_password,
+  $iscsi_ip_address,
   $rabbit_host     = '127.0.0.1',
   $volume_group    = 'nova-volumes',
   $enabled         = true
@@ -20,6 +21,7 @@ class openstack::cinder(
   if $enabled {
     class { 'cinder::volume::iscsi':
       volume_group     => $volume_group,
+      iscsi_ip_address => $iscsi_ip_address,
     }
   }
 }
