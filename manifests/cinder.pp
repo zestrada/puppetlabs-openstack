@@ -3,6 +3,7 @@ class openstack::cinder(
   $rabbit_password,
   $iscsi_ip_address,
   $rabbit_host            = '127.0.0.1',
+  $rabbit_userid          = 'nova',
   $volume_group           = 'nova-volumes',
   $keystone_password      = 'keystone',
   $keystone_enabled       = true,
@@ -15,10 +16,12 @@ class openstack::cinder(
   $package_ensure         = 'latest',
   $bind_host              = '0.0.0.0',
   $config_api             = false,
+  $config_scheduler       = false,
   $enabled                = true
 ) {
 
   class { 'cinder::base':
+    rabbit_userid   => $rabbit_userid,
     rabbit_password => $rabbit_password,
     rabbit_host     => $rabbit_host,
     sql_connection  => $sql_connection,
@@ -49,6 +52,11 @@ class openstack::cinder(
       #service_port           => $service_port,
       package_ensure         => $package_ensure,
       bind_host              => $bind_host,
+    }
+  }
+  if $config_scheduler {
+    class { 'cinder::scheduler':
+      package_ensure         => $package_ensure,
     }
   }
 }
