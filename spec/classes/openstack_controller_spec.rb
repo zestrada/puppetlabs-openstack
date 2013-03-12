@@ -120,6 +120,7 @@ describe 'openstack::controller' do
         should contain_class('nova::volume')
         should_not contain_class('quantum::db::mysql')
         should_not contain_class('cinder::db::mysql')
+        should_not contain_class('cinder::api')
       end
 
     end
@@ -415,7 +416,7 @@ describe 'openstack::controller' do
       it 'should not contain cinder classes' do
         should_not contain_class('cinder::base')
         should_not contain_class('cinder::api')
-        should_not contain_class('cinder:"scheduler')
+        should_not contain_class('cinder::scheduler')
       end
     end
 
@@ -427,6 +428,8 @@ describe 'openstack::controller' do
         should contain_class('cinder::base').with(
           :verbose         => 'False',
           :sql_connection  => 'mysql://cinder:cinder_pass@127.0.0.1/cinder?charset=utf8',
+          :rabbit_userid   => 'nova',
+          :rabbit_host     => '127.0.0.1',
           :rabbit_password => 'rabbit_pw'
         )
         should contain_class('cinder::api').with_keystone_password('cinder_pass')
@@ -443,14 +446,18 @@ describe 'openstack::controller' do
           :cinder_db_password   => 'bar',
           :cinder_db_user       => 'baz',
           :cinder_db_dbname     => 'blah',
-          :db_host              => '127.0.0.2'
+          :db_host              => '127.0.0.2',
+          :rabbit_host     => '127.0.0.2',
+          :rabbit_userid   => 'nova2'
         )
       end
       it 'should configure cinder using defaults' do
         should contain_class('cinder::base').with(
           :verbose         => 'True',
           :sql_connection  => 'mysql://baz:bar@127.0.0.2/blah?charset=utf8',
-          :rabbit_password => 'rabbit_pw2'
+          :rabbit_password => 'rabbit_pw2',
+          :rabbit_host     => '127.0.0.2',
+          :rabbit_userid   => 'nova2'
         )
         should contain_class('cinder::api').with_keystone_password('foo')
         should contain_class('cinder::scheduler')
