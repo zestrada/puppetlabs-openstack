@@ -12,12 +12,12 @@ class openstack::cinder(
   $keystone_auth_host     = 'localhost',
   $keystone_auth_port     = '35357',
   $keystone_auth_protocol = 'http',
-  $service_port           = '5000',
   $package_ensure         = 'latest',
   $bind_host              = '0.0.0.0',
   $config_api             = false,
   $config_scheduler       = false,
-  $enabled                = true
+  $enabled                = true,
+  $verbose                = false
 ) {
 
   class { 'cinder::base':
@@ -49,7 +49,6 @@ class openstack::cinder(
       keystone_auth_host     => $keystone_auth_host,
       keystone_auth_port     => $keystone_auth_port,
       keystone_auth_protocol => $keystone_auth_protocol,
-      #service_port           => $service_port,
       package_ensure         => $package_ensure,
       bind_host              => $bind_host,
     }
