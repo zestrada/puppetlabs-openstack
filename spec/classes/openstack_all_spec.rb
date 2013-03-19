@@ -19,7 +19,7 @@ describe 'openstack::all' do
       :nova_db_password      => 'nova_pass',
       :nova_user_password    => 'nova_pass',
       :secret_key            => 'secret_key',
-      :quantum               => false,
+      :quantum               => false
     }
   end
 
@@ -46,8 +46,7 @@ describe 'openstack::all' do
         :cache_server_port => '11211',
         :swift             => false,
         :quantum           => false,
-        :horizon_app_links => false,
-        :listen_ssl        => false
+        :horizon_app_links => false
       )
     end
 
