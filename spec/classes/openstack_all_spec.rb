@@ -47,7 +47,6 @@ describe 'openstack::all' do
         :swift             => false,
         :quantum           => false,
         :horizon_app_links => false,
-        :listen_ssl        => false
       )
     end
 
