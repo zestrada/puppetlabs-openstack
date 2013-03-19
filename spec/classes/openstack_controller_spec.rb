@@ -394,7 +394,7 @@ describe 'openstack::controller' do
         :cache_server_port => '11211',
         :swift             => false,
         :quantum           => false,
-        :horizon_app_links => false,
+        :horizon_app_links => false
       )
     end
 
